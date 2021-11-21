@@ -12,7 +12,7 @@
 
 * Juben Antony Cacha Panduro
 * Gerardo Josue Huerta Macedo
-* f 
+* Daurih Paulo Alegre Rocha
 * f
 * f
 
