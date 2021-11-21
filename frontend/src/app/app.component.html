@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-5 busca">
+
+<form>
+<div class="card shadow-sm">
+  <div class="card-body">
+
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">  <label for="edad">Edad:</label><input type="number" class="form-control" id="edad" name="edad" min="1" [(ngModel)]="edad"><br>
+    </li>
+    <li class="list-group-item">
+      <label>¿Trabaja?:</label>
+      <select id='trabaja' class="form-control" name="trabaja" [(ngModel)]="trabajo">
+        <option selected value='1'>Si</option>
+        <option value='0'>No</option>
+      </select>
+
+    </li>
+    <li class="list-group-item">  <label for="vinculo" class="align-middle">Cantidad de veces vinculado con delitos:</label><input type="number" class="form-control" id="vinculo" name="vinculo" min="1" [(ngModel)]="vinculo"><br>
+    </li>
+    <li class="list-group-item">  <label for="tipo" class="align-text-bottom">Tipo de Violencia:</label><input type="number" class="form-control" id="tipo" name="tipo" min="1" [(ngModel)]="tipovio"><br>
+    </li>
+    <li class="list-group-item">  <label for="alcohol" >Cantidad de veces detenido por consumo de alcohol:</label><input type="number" class="form-control" id="alcohol" name="alcohol" min="1" [(ngModel)]="cAlcohol"><br>
+    </li>
+    <li class="list-group-item">  <label for="fuma">Veces detenido por fumar en lugares cerrados:</label><input type="number" class="form-control" id="fuma" name="fuma" min="1" [(ngModel)]="fuma"><br>
+    </li>
+    <li class="list-group-item">  <label for="consumeDroga">Veces detenido por consumo de drogas:</label><input type="number" class="form-control" id="consumeDroga" name="consumeDroga" min="1" [(ngModel)]="cDroga"><br>
+    </li>
+    <li class="list-group-item">  <label for="adiccion">Adiccion no convencional:</label><input type="number" id="adiccion" class="form-control" name="adiccion" min="1" [(ngModel)]="adiccion"><br>
+    </li>
+    <li class="list-group-item">  <label for="riesgoPresuntivo">Riesgo de presunto delito:</label><input type="number" id="riesgoPresuntivo" class="form-control" name="riesgoPresuntivo" min="1" [(ngModel)]="riesgo"><br>
+    </li>
+    <li class="list-group-item"><label>Mes:</label>
+      <select id='mes' class="form-control" name="mes"[(ngModel)]="mes">
+        <option selected value='1'>Enero</option>
+        <option value='2'>Febrero</option>
+        <option value='3'>Marzo</option>
+        <option value='4'>Abril</option>
+        <option value='5'>Mayo</option>
+        <option value='6'>Junio</option>
+        <option value='7'>Julio</option>
+        <option value='8'>Agosto</option>
+        <option value='9'>Setiembre</option>
+        <option value='10'>Octubre</option>
+        <option value='11'>Noviembre</option>
+        <option value='12'>Diciembre</option>
+      </select></li>
+  </ul>
+  <div class="d-grid gap-2">
+    <button class="btn btn-dark" (click)="runAlgorithm()"> BUSCAR </button></div>
+
+</div>
+</form>
+
+  </div>
+  <div class="col-7">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <p class="card-title">Registro de casos del Centro de Atención Institucional</p>
+        <p class="card-text">Busca en el registro los casos de los agresores sentenciados por hechos de violencia en el marco de la Ley Nº 30364, segun las caracteristicas del agresor. [<a href="https://www.datosabiertos.gob.pe/dataset/base-de-datos-del-registro-de-casos-del-centro-de-atenci%C3%B3n-institucional-cai" target="_blank">FUENTE</a>]</p>
+      </div>
+    </div>
+
+    <div class="info"><div class="card shadow-sm">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">DISTRITO</th>
+          <th scope="col">EDAD</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let info of info">
+          <th scope="row"><div class="infito">1</div><div class="fondito"></div></th>
+          <td>Edad: {{info.edad}}<br>
+            ¿Trabaja?: {{info.trabajo}}<br>
+            Veces vinculado con delitos: {{info.vinculo}}<br>
+            Tipo de Violencia: {{info.tipovio}}<br>
+            Veces detenido por consumo de alcohol: {{info.cAlcohol}}</td>
+          <td>Veces detenido por fumar en lugares cerrados: {{info.fuma}}<br>
+            Veces detenido por consumo de drogas:{{info.cDroga}}<br>
+            Adiccion no convencional:{{info.adiccion}}<br>
+            Riesgo de presunto delito:{{info.riesgo}}<br>
+            Mes:{{info.mes}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+}
+
+
+  </div>
+
+
+</div>

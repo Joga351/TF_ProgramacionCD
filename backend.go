@@ -90,7 +90,7 @@ func listarData(res http.ResponseWriter, req *http.Request) {
 }
 
 func buscarDato(res http.ResponseWriter, req *http.Request) {
-	log.Println("Llamada al endpoint /dato")
+	log.Println("Llamada al endpoint /buscarDato")
 	//estableceer el tipo de contenido que se devuelve
 	res.Header().Set("Content-Type", "application/json; charset=utf-8")
 	//recuperar el parametro enviado
@@ -107,7 +107,7 @@ func buscarDato(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func bienvenidaOwo(res http.ResponseWriter, req *http.Request) {
+func home(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "text/html; charset=utf-8")
 	io.WriteString(res,
 		`<doctype html>
@@ -119,8 +119,8 @@ func bienvenidaOwo(res http.ResponseWriter, req *http.Request) {
 		<link rel= "stylesheet" type="text/css" href="front.css">
 		<h2>Delitos registrados en Lima</h2>
 		<h3> Integrantes del equipo </h3>
-		<h4> -Patrick </h4>
-		<h4> -Ale </h4>
+		<h4> -Fernando </h4>
+		<h4> -Juben </h4>
 		<h4> -Josue </h4>
 		<form>
 			<button> Ver lista de datos </button>
@@ -134,47 +134,12 @@ func bienvenidaOwo(res http.ResponseWriter, req *http.Request) {
 	</html>
 	`)
 }
-func handleRequest() {
-	//declarar los endpoints
-	http.HandleFunc("/listarData", listarData)
-	http.HandleFunc("/buscarDato", buscarDato)
-	http.HandleFunc("/bienvenida", bienvenidaOwo)
-
-	//puesto esucha del servicio
-	log.Fatal(http.ListenAndServe(":3501", nil))
-}
-
-func main() {
-	cargarData()
-	handleRequest()
-}
-
-func bienvenidaOwo(res http.ResponseWriter, req *http.Request) {
-	res.Header().Set("Content-Type", "text/html; charset=utf-8")
-	io.WriteString(res,
-		`<doctype html>
-	<html>
-	<head>
-		<title>Trabajo Final Programacion Concurrente y Distribuida</title>
-	</head>
-	<body>
-		<link rel= "stylesheet" type="text/css" href="front.css">
-		<h2>Delitos registrados en Lima</h2>
-		<h3> Integrantes del equipo </h3>
-		<h4> -Patrick </h4>
-		<h4> -Ale </h4>
-		<h4> -Gerardo Josue Huerta Macedo</h4>
-	</body>	
-	</html>
-	`)
-}
 
 func handleRequest() {
 	//declarar los endpoints
 	http.HandleFunc("/listarData", listarData)
 	http.HandleFunc("/buscarDato", buscarDato)
-	http.HandleFunc("/algoritmo", algoritmoKNN)
-	http.HandleFunc("/home", bienvenidaOwo)
+	http.HandleFunc("/home", home)
 
 	//puesto esucha del servicio
 	log.Fatal(http.ListenAndServe(":3505", nil))
