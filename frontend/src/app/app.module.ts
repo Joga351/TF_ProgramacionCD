@@ -1,22 +1,22 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+ 
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { CommonModule, DatePipe  } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+import { ListarComponent } from './Persona/listar/listar.component';
+import { ServiceService } from './Persona/Service/service.service';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ListarComponent,
+
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    DatePipe,
-    CommonModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

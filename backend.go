@@ -9,25 +9,25 @@ import (
 	"strconv"
 )
 
-type Data struct {
-	//numero del dato
-	Index int `json:"Numero de orden"`
-	//features de la data
-	CAI              string `json:"Distrito"`
-	Edad             int    `json:"Edad"`
-	Trabajo          int    `json:"Trabaja"`
-	Vinculo          int    `json:"Cantidad de veces vinculado con delitos"`
-	TipoVio          int    `json:"Tipo de Violencia"`
-	ConsumeAlcohol   int    `json:"Cantidad de veces detenido por consumo de alcohol"`
-	Fuma             int    `json:"Veces detenido por fumar en lugares cerrados"`
-	ConsumeDroga     int    `json:"Veces detenido por consumo de drogas"`
-	Adiccion         int    `json:"Adiccion no convencional"`
-	RiesgoPresuntivo int    `json:"Riesgo de presunto delito"`
-	Mes              int    `json:"Mes de ocurrencia"`
-}
-
 //globar
 var data []Data
+
+type Data struct {
+	//numero del dato
+	Index int `json:"index"`
+	//features de la data
+	CAI              string `json:cai`
+	Edad             int    `json:edad`
+	Trabajo          int    `json:trabajo`
+	Vinculo          int    `json:vinculo`
+	TipoVio          int    `json:tipovio`
+	ConsumeAlcohol   int    `json:cAlcohol`
+	Fuma             int    `json:fuma`
+	ConsumeDroga     int    `json:cDroga`
+	Adiccion         int    `json:adiccion`
+	RiesgoPresuntivo int    `json:riesgo`
+	Mes              int    `json:mes`
+}
 
 func readCSVFromUrl(url string) ([][]string, error) {
 	resp, err := http.Get(url)
@@ -48,7 +48,7 @@ func readCSVFromUrl(url string) ([][]string, error) {
 
 func cargarData() {
 	// Lee csv del github :D
-	url := "https://raw.githubusercontent.com/abad2016/TFConcurrente/main/Assets/casos_cai_2019.csv"
+	url := "https://raw.githubusercontent.com/Joga351/TF_ProgramacionCD/main/Assets/casos_cai_2019.csv"
 	datos, err := readCSVFromUrl(url)
 	if err != nil {
 		panic(err)
@@ -123,15 +123,15 @@ func home(res http.ResponseWriter, req *http.Request) {
 		<h4> -Juben </h4>
 		<h4> -Josue </h4>
 		<form>
-			<button> Ver lista de datos </button>
-			<button > Buscar dato </button>
-			<button> Quienes somos </button>
+			<a href="/buscarDato">Busca</a>
+			<a href="/listarData">Listar</a>
 		</form>
 
-		<a href="/busca">Busca</a>
+		<a href="/buscarDato">Busca</a>
 		
 	</body>	
 	</html>
+
 	`)
 }
 

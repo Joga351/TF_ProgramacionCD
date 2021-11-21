@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
-import { AfterViewInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Info } from './models/info';
-import { HttpDataService } from './services/http-data.service';
+import { Component} from '@angular/core';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,35 +8,14 @@ import { HttpDataService } from './services/http-data.service';
 })
 export class AppComponent {
   title = 'CrimesGO';
-  info: Info[];
-  index = 0;
-  cai = 'no';
-  edad = ' ';
-  trabajo = ' ';
-  vinculo = ' ';
-  tipovio=' ';
-  cAlcohol=' ';
-  fuma = '';
-  cDroga=' ';
-  adiccion= '';
-  riesgo= '';
-  mes='';
-
-  constructor(private httpDataService: HttpDataService ) {
-  }
-
-  async ngOnInit(){
-    this.info = []
-  }
-
-
-
   
+  constructor(private router:Router){}
 
-
-
+  Listar(){
+    this.router.navigate(["listar"])
+  }
+  
 }
-
 
 
 
