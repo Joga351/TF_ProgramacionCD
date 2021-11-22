@@ -6,14 +6,29 @@ import (
 	"net"
 )
 
-type Data struct {
+type INFO struct {
 	Nombre   string
 	Origen   string
 	Busqueda []string
 	Datos    []int
 }
 
-func Send(data Data) {
+func Api(persona INFO) {
+	C, err := net.Dial("tcp", ":9000")
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = gob.NewEncoder(C).Encode(persona)
+	if err != nil {
+		fmt.Println(err)
+	}
+	C.Close()
+}
+
+func Send(data INFO) {
 	C, err := net.Dial("tcp", ":9000")
 
 	if err != nil {
@@ -27,8 +42,8 @@ func Send(data Data) {
 	}
 	C.Close()
 }
-func Cliente() {
-	S, err := net.Listen("tcp", ":9001")
+func Receptor() {
+	S, err := net.Listen("tcp", ":9003")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -40,11 +55,11 @@ func Cliente() {
 			fmt.Println(err)
 			continue
 		}
-		go ManejadorCliente1(C)
+		go ManejadorReceptor(C)
 	}
 }
 
-func ManejadorCliente1(C net.Conn) {
+func ManejadorReceptor(C net.Conn) {
 	var data Data
 	err := gob.NewDecoder(C).Decode(&data)
 
@@ -53,16 +68,24 @@ func ManejadorCliente1(C net.Conn) {
 		return
 	} else {
 		fmt.Println(data)
-		data.Nombre = "Cliente"
-		data.Origen = "Cliente01"
-		data.Datos = []int{2, 5, 6}
-		go Send(data)
+		// llamamos al algoitmo y le enviamos los datos de busqueda
+
 	}
 }
 
 func main() {
 
-	go Cliente()
+	data := INFO{
+		Nombre: "Denilson",
+		Origen: "API",
+		Busqueda
+		Datos:  []int{},
+	}
+
+	go Api(data)
+
+	go Receptor()
+
 	var input string
 
 	fmt.Scanln(&input)

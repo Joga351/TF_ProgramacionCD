@@ -28,7 +28,7 @@ func Send(data Data) {
 	C.Close()
 }
 func Cliente() {
-	S, err := net.Listen("tcp", ":9001")
+	S, err := net.Listen("tcp", ":9002")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -54,8 +54,11 @@ func ManejadorCliente1(C net.Conn) {
 	} else {
 		fmt.Println(data)
 		data.Nombre = "Cliente"
-		data.Origen = "Cliente01"
-		data.Datos = []int{2, 5, 6}
+		data.Origen = "Cliente02"
+		data.Datos = []int{2}
+		// llamamos al algoitmo y le enviamos los datos de busqueda
+		//
+
 		go Send(data)
 	}
 }

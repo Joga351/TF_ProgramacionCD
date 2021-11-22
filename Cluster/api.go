@@ -6,13 +6,17 @@ import (
 	"net"
 )
 
-type Persona struct {
-	Nombre string
-	Origen string
-	Email  []string
+type Data struct {
+	Nombre   string
+	Origen   string
+	Busqueda []string
+	Datos    []int
 }
 
-func Api(persona Persona) {
+// listaPersonas := []personas{}
+// apend(lista,persona)
+
+func Api(persona Data) {
 	C, err := net.Dial("tcp", ":9000")
 
 	if err != nil {
@@ -27,20 +31,63 @@ func Api(persona Persona) {
 	C.Close()
 }
 
-func main() {
+func Send(data Data) {
+	C, err := net.Dial("tcp", ":9000")
 
-	persona := Persona{
-		Nombre: "Denilson",
-		Origen: "API",
-		Email: []string{
-			"Prueba01",
-			"Pruena02",
-			"",
-			""
-		},
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
 
-	go Api(persona)
+	err = gob.NewEncoder(C).Encode(data)
+	if err != nil {
+		fmt.Println(err)
+	}
+	C.Close()
+}
+func Receptor() {
+	S, err := net.Listen("tcp", ":9003")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for {
+		C, err := S.Accept()
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		go ManejadorReceptor(C)
+	}
+}
+
+func ManejadorReceptor(C net.Conn) {
+	var data Data
+	err := gob.NewDecoder(C).Decode(&data)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	} else {
+		fmt.Println(data)
+		// llamamos al algoitmo y le enviamos los datos de busqueda
+
+	}
+}
+
+func main() {
+
+	data := Data{
+		Nombre: "Denilson",
+		Origen: "API",
+		Datos:  []int{},
+	}
+
+	go Api(data)
+
+	go Receptor()
+
 	var input string
 
 	fmt.Scanln(&input)
