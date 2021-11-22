@@ -3,13 +3,9 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 )
-
-var count int
-var data []Data
 
 type Data struct {
 	//numero del dato
@@ -29,12 +25,24 @@ type Data struct {
 	Left             *Data
 	Right            *Data
 }
-
-type Node struct {
-	Key   int
-	Left  *Node
-	Right *Node
+type Persona struct {
+	Index            int
+	CAI              string
+	Edad             int
+	Trabajo          int
+	Vinculo          int
+	TipoVio          int
+	ConsumeAlcohol   int
+	Fuma             int
+	ConsumeDroga     int
+	Adiccion         int
+	RiesgoPresuntivo int
+	Mes              int
 }
+
+var count int
+var data []Data
+var ejemplo []Persona
 
 // leemos csv del github
 func readCSVFromUrl(url string) ([][]string, error) {
@@ -83,48 +91,73 @@ func cargarData() {
 		file.Mes, _ = strconv.Atoi(rec[11])
 		data = append(data, file)
 	}
-	log.Println(data)
 }
-
-func (n *Data) Insert(k int) {
-	if n.Index < k {
+func (n *Data) Insert(k Data) {
+	if n.Index < data[k.Index].Index {
 		//move right
 		if n.Right == nil {
-			n.Right = &Data{Index: k}
+			n.Right = &data[k.Index-1]
 		} else {
 			n.Right.Insert(k)
 		}
-	} else if n.Index > k {
+	} else if n.Index > data[k.Index].Index {
 		//move left
 		if n.Left == nil {
-			n.Left = &Data{Index: k}
+			n.Left = &data[k.Index-1]
 		} else {
 			n.Left.Insert(k)
 		}
 	}
 }
 
-func (n *Data) Search(k int) bool {
-	count++
+func (n *Data) SearchIndex(k Data) bool {
 	if n == nil {
 		return false
 	}
-	if n.Index < k {
+	if n.Edad < k.Edad {
 		//move right
-		return n.Right.Search(k)
-	} else if n.Index > k {
+		return n.Right.SearchIndex(k)
+	} else if n.Edad > k.Edad {
 		//move left
-		return n.Left.Search(k)
+		return n.Left.SearchIndex(k)
+	}
+	return true
+}
+
+func (n *Data) SearchEdad(k int) bool {
+	if n.Edad == k {
+		nuevo := Persona{
+			Index:            n.Index,
+			CAI:              n.CAI,
+			Edad:             n.Edad,
+			Trabajo:          n.Trabajo,
+			Vinculo:          n.Vinculo,
+			TipoVio:          n.TipoVio,
+			ConsumeAlcohol:   n.ConsumeAlcohol,
+			Fuma:             n.Fuma,
+			ConsumeDroga:     n.ConsumeDroga,
+			Adiccion:         n.Adiccion,
+			RiesgoPresuntivo: n.RiesgoPresuntivo,
+			Mes:              n.Mes,
+		}
+		ejemplo = append(ejemplo, nuevo)
+	}
+	if n.Edad < k {
+		//move right
+		return n.Right.SearchEdad(k)
+	} else if n.Edad > k {
+		//move left
+		return n.Left.SearchEdad(k)
 	}
 	return true
 }
 
 func main() {
 
-	tree := &Data{Index: 5}
-	//en tree en vez de index: 5 tiene que jalar el 5to objeto del data set
-	tree.Insert(2)
-	tree.Insert(6)
-	fmt.Println(tree.Search(2))
-
+	cargarData()
+	tree := data[0]
+	for i := 0; i <= 30; i++ {
+		tree.Insert(data[i+1])
+	}
+	fmt.Println(tree)
 }
