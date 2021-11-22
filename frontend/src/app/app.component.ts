@@ -12,7 +12,7 @@ export class AppComponent {
   constructor(private router:Router){}
 
   Listar(){
-    this.router.navigate(["listar"])
+    this.router.navigate(["listar"]);
   }
   
 }

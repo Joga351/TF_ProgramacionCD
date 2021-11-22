@@ -5,8 +5,9 @@
 </div>
 <hr>
 <div class="container" style="text-align:center">
-  <button (click)="Listar" class="btn btn-info">Listar</button>
+  <button class="btn btn-info">Home</button>
+  <button (click)="Listar()" class="btn btn-info" style="margin-left: 15px">Listar</button>
   <button class="btn btn-info" style="margin-left: 15px">Buscar</button>
 </div>
 <hr>
-<app-listar><app-listar>
+<router-outlet></router-outlet>

@@ -12,6 +12,6 @@ export class ServiceService {
   url='http://localhost:3505/listarData';
 
   getPersonas(){
-    return this.http.get<Persona>(this.url)
+    return this.http.get<Persona[]>(this.url)
   }
 }
