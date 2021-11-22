@@ -16,7 +16,7 @@ type Data struct {
 	//numero del dato
 	Index int `json:"index"`
 	//features de la data
-	CAI              string `json:cai`
+	Cai              string `json:cai`
 	Edad             int    `json:edad`
 	Trabajo          int    `json:trabajo`
 	Vinculo          int    `json:vinculo`
@@ -62,7 +62,7 @@ func cargarData() {
 			continue
 		}
 		file.Index, _ = strconv.Atoi(rec[0])
-		file.CAI = rec[1]
+		file.Cai = rec[1]
 		file.Edad, _ = strconv.Atoi(rec[2])
 		file.Trabajo, _ = strconv.Atoi(rec[3])
 		file.Vinculo, _ = strconv.Atoi(rec[4])
@@ -80,6 +80,8 @@ func cargarData() {
 
 //Funciones resuleve los requests
 func listarData(res http.ResponseWriter, req *http.Request) {
+
+	enableCors(&res)
 	log.Println("Llamada al endpoint /listarData")
 	//estableceer el tipo de contenido que se devuelve
 	res.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -90,6 +92,7 @@ func listarData(res http.ResponseWriter, req *http.Request) {
 }
 
 func buscarDato(res http.ResponseWriter, req *http.Request) {
+	enableCors(&res)
 	log.Println("Llamada al endpoint /buscarDato")
 	//estableceer el tipo de contenido que se devuelve
 	res.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -108,6 +111,7 @@ func buscarDato(res http.ResponseWriter, req *http.Request) {
 }
 
 func home(res http.ResponseWriter, req *http.Request) {
+	enableCors(&res)
 	res.Header().Set("Content-Type", "text/html; charset=utf-8")
 	io.WriteString(res,
 		`<doctype html>
@@ -134,9 +138,13 @@ func home(res http.ResponseWriter, req *http.Request) {
 
 	`)
 }
+func enableCors(res *http.ResponseWriter) {
+	(*res).Header().Set("Access-Control-Allow-Origin", "*")
+}
 
 func handleRequest() {
 	//declarar los endpoints
+
 	http.HandleFunc("/listarData", listarData)
 	http.HandleFunc("/buscarDato", buscarDato)
 	http.HandleFunc("/home", home)
