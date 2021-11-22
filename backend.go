@@ -97,12 +97,12 @@ func buscarDato(res http.ResponseWriter, req *http.Request) {
 	//estableceer el tipo de contenido que se devuelve
 	res.Header().Set("Content-Type", "application/json; charset=utf-8")
 	//recuperar el parametro enviado
-	sIndex := req.FormValue("Index")
-	iIndex, _ := strconv.Atoi(sIndex)
+	sEdad := req.FormValue("Edad")
+	iEdad, _ := strconv.Atoi(sEdad)
 
 	//logica de la funcion
 	for _, dat := range data {
-		if dat.Index == iIndex {
+		if dat.Edad == iEdad {
 			//codificacion
 			ojsonBytes, _ := json.MarshalIndent(dat, "", " ")
 			io.WriteString(res, string(ojsonBytes))
@@ -112,6 +112,7 @@ func buscarDato(res http.ResponseWriter, req *http.Request) {
 
 func home(res http.ResponseWriter, req *http.Request) {
 	enableCors(&res)
+	log.Println("Llamada al endpoint /home")
 	res.Header().Set("Content-Type", "text/html; charset=utf-8")
 	io.WriteString(res,
 		`<doctype html>

@@ -67,6 +67,7 @@ export default {
     
     mounted:function(){
         let direccion = "http://localhost:3505/listarData";
+        let direccion2 = "http://localhost:3505/buscarDato?Edad=";
         axios.get(direccion).then( data =>{this.Personas = data.data;
         });
     }
