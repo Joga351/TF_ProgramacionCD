@@ -16,7 +16,7 @@ type Data struct {
 	//numero del dato
 	Index int `json:"index"`
 	//features de la data
-	CAI              string `json:cai`
+	Cai              string `json:cai`
 	Edad             int    `json:edad`
 	Trabajo          int    `json:trabajo`
 	Vinculo          int    `json:vinculo`
@@ -62,7 +62,7 @@ func cargarData() {
 			continue
 		}
 		file.Index, _ = strconv.Atoi(rec[0])
-		file.CAI = rec[1]
+		file.Cai = rec[1]
 		file.Edad, _ = strconv.Atoi(rec[2])
 		file.Trabajo, _ = strconv.Atoi(rec[3])
 		file.Vinculo, _ = strconv.Atoi(rec[4])
