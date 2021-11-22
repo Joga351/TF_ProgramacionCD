@@ -13,7 +13,7 @@
 * Juben Antony Cacha Panduro
 * Gerardo Josue Huerta Macedo
 * Daurih Paulo Alegre Rocha
-* f
+* Jesus Fernando Olano Pereda
 * f
 
 ## Tema:
