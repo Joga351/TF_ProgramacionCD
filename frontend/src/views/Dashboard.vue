@@ -4,6 +4,7 @@
             Lista de Criminales Registrados
             <div class="container izquierda">
 
+                <input type="number" name="name" id="name" v-model="name">
                 <button class="btn btn-primary" v-on:click="Buscar()" >Buscar</button>
                 <br><br>
 
@@ -58,16 +59,22 @@ export default {
     data(){
         return {
             Personas:null,
+            name:0
         }
     },
     components:{
         Header,
         Footer
     },
-    
+    methods:{
+            buscar(){
+                this.$router.push('/buscar/');
+            }
+    },
+            
     mounted:function(){
         let direccion = "http://localhost:3505/listarData";
-        let direccion2 = "http://localhost:3505/buscarDato?Edad=";
+        //let direccion2 = "http://localhost:3505/buscarDato?Index=" + variable;
         axios.get(direccion).then( data =>{this.Personas = data.data;
         });
     }

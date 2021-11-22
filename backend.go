@@ -2,9 +2,12 @@ package main
 
 import (
 	"encoding/csv"
+	"encoding/gob"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
+	"net"
 	"net/http"
 	"strconv"
 )
@@ -28,6 +31,10 @@ type Data struct {
 	RiesgoPresuntivo int    `json:riesgo`
 	Mes              int    `json:mes`
 }
+
+var info []Info
+
+type Info struct{}
 
 func readCSVFromUrl(url string) ([][]string, error) {
 	resp, err := http.Get(url)
@@ -97,12 +104,45 @@ func buscarDato(res http.ResponseWriter, req *http.Request) {
 	//estableceer el tipo de contenido que se devuelve
 	res.Header().Set("Content-Type", "application/json; charset=utf-8")
 	//recuperar el parametro enviado
-	sEdad := req.FormValue("Edad")
-	iEdad, _ := strconv.Atoi(sEdad)
+	sIndex := req.FormValue("Index")
+	iIndex, _ := strconv.Atoi(sIndex)
 
 	//logica de la funcion
 	for _, dat := range data {
-		if dat.Edad == iEdad {
+		if dat.Index == iIndex {
+			//codificacion
+			ojsonBytes, _ := json.MarshalIndent(dat, "", " ")
+			io.WriteString(res, string(ojsonBytes))
+		}
+	}
+}
+
+func Api(persona Data) {
+	C, err := net.Dial("tcp", ":9000")
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = gob.NewEncoder(C).Encode(persona)
+	if err != nil {
+		fmt.Println(err)
+	}
+	C.Close()
+}
+
+func algoritmoArbol(res http.ResponseWriter, req *http.Request) {
+	enableCors(&res)
+	log.Println("Llamada al endpoint /algoritmoArbol")
+	//estableceer el tipo de contenido que se devuelve
+	res.Header().Set("Content-Type", "application/json; charset=utf-8")
+	//recuperar el parametro enviado
+	sEdad := req.FormValue("Edad")
+	iEdad, _ := strconv.Atoi(sEdad)
+	//logica de la funcion
+	for _, dat := range data {
+		if dat.Index == iEdad {
 			//codificacion
 			ojsonBytes, _ := json.MarshalIndent(dat, "", " ")
 			io.WriteString(res, string(ojsonBytes))
@@ -127,6 +167,8 @@ func home(res http.ResponseWriter, req *http.Request) {
 		<h4> -Fernando </h4>
 		<h4> -Juben </h4>
 		<h4> -Josue </h4>
+		<h4> -Denilson </h4>
+		<h4> -Daurith </h4>
 		<form>
 			<a href="/buscarDato">Busca</a>
 			<a href="/listarData">Listar</a>
