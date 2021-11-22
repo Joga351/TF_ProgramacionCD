@@ -14,7 +14,7 @@
 * Gerardo Josue Huerta Macedo
 * Daurih Paulo Alegre Rocha
 * Jesus Fernando Olano Pereda
-* f
+* Denilson Ramirez Zarate Denilson
 
 ## Tema:
 ## Registro de casos del Centro de Atención Institucional (CAI)
