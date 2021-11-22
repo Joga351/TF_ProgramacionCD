@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header/>
-
+            Lista de Criminales Registrados
             <div class="container izquierda">
 
                 <button class="btn btn-primary" v-on:click="Buscar()" >Buscar</button>
@@ -28,7 +28,7 @@
                 <tbody>
                     <tr v-for="persona in Personas" :key="persona.index">
                         <th scope="row">{{ persona.index }}</th>
-                        <td>{{ persona.CAI }}</td>
+                        <td>{{ persona.Cai }}</td>
                         <td>{{ persona.Edad }}</td>
                         <td>{{ persona.Trabajo }}</td>
                         <td>{{ persona.Vinculo }}</td>

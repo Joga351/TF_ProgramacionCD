@@ -80,6 +80,8 @@ func cargarData() {
 
 //Funciones resuleve los requests
 func listarData(res http.ResponseWriter, req *http.Request) {
+
+	enableCors(&res)
 	log.Println("Llamada al endpoint /listarData")
 	//estableceer el tipo de contenido que se devuelve
 	res.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -90,6 +92,7 @@ func listarData(res http.ResponseWriter, req *http.Request) {
 }
 
 func buscarDato(res http.ResponseWriter, req *http.Request) {
+	enableCors(&res)
 	log.Println("Llamada al endpoint /buscarDato")
 	//estableceer el tipo de contenido que se devuelve
 	res.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -108,6 +111,7 @@ func buscarDato(res http.ResponseWriter, req *http.Request) {
 }
 
 func home(res http.ResponseWriter, req *http.Request) {
+	enableCors(&res)
 	res.Header().Set("Content-Type", "text/html; charset=utf-8")
 	io.WriteString(res,
 		`<doctype html>
@@ -134,9 +138,13 @@ func home(res http.ResponseWriter, req *http.Request) {
 
 	`)
 }
+func enableCors(res *http.ResponseWriter) {
+	(*res).Header().Set("Access-Control-Allow-Origin", "*")
+}
 
 func handleRequest() {
 	//declarar los endpoints
+
 	http.HandleFunc("/listarData", listarData)
 	http.HandleFunc("/buscarDato", buscarDato)
 	http.HandleFunc("/home", home)
