@@ -6,14 +6,17 @@ import (
 	"net"
 )
 
-type Data struct {
-	Nombre   string
-	Origen   string
-	Busqueda []string
-	Datos    []int
+type INFO struct {
+	Origen  string
+	Datos   string
+	Persona []PERSONA
+}
+type PERSONA struct {
+	Nombre string
+	Edad   int
 }
 
-func Send(data Data) {
+func Send(info INFO) {
 	C, err := net.Dial("tcp", ":9000")
 
 	if err != nil {
@@ -21,7 +24,7 @@ func Send(data Data) {
 		return
 	}
 
-	err = gob.NewEncoder(C).Encode(data)
+	err = gob.NewEncoder(C).Encode(info)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -45,18 +48,19 @@ func Cliente() {
 }
 
 func ManejadorCliente1(C net.Conn) {
-	var data Data
-	err := gob.NewDecoder(C).Decode(&data)
+	var info INFO
+	err := gob.NewDecoder(C).Decode(&info)
 
 	if err != nil {
 		fmt.Println(err)
 		return
 	} else {
-		fmt.Println(data)
-		data.Nombre = "Cliente"
-		data.Origen = "Cliente01"
-		data.Datos = []int{2, 5, 6}
-		go Send(data)
+
+		fmt.Println(info)
+		info.Origen = "Cliente"
+		info.Persona[0].Nombre = "PersonaCliente"
+		info.Persona = append(info.Persona, PERSONA{Nombre: "PersonaPrueba", Edad: 30})
+		go Send(info)
 	}
 }
 

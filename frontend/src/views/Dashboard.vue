@@ -1,13 +1,14 @@
 <template>
     <div>
         <Header/>
-            Lista de Criminales Registrados
+            <h1>Lista de Criminales Registrados</h1>
             <div class="container izquierda">
 
-                <input type="number" name="name" id="name" v-model="name">
-                <button class="btn btn-primary" v-on:click="Buscar()" >Buscar</button>
+                <button class="btn btn-primary" v-on:click="home()" >Home</button>
+                <button class="btn btn-primary" v-on:click="listar()" style="margin-left: 10px" >Listar</button>
                 <br><br>
-
+                <button class="btn btn-dark margen" v-on:click="buscar()" >Buscar</button>
+                <input type="text"  name="pagina" id="pagina" v-model="pagina">
 
                 <table class="table table-hover">
                 <thead>
@@ -59,7 +60,8 @@ export default {
     data(){
         return {
             Personas:null,
-            name:0
+            Personas2:null,
+            pagina:'',
         }
     },
     components:{
@@ -67,17 +69,23 @@ export default {
         Footer
     },
     methods:{
+        home(){
+            this.$router.push('/');
+        },
             buscar(){
-                this.$router.push('/buscar/');
-            }
-    },
-            
-    mounted:function(){
-        let direccion = "http://localhost:3505/listarData";
-        //let direccion2 = "http://localhost:3505/buscarDato?Index=" + variable;
+                let direccion2 = "http://localhost:3505/buscarDato?Index=1";
+        axios.get(direccion2).then( data =>{this.Personas = data.data;
+        });
+            },
+
+            listar(){
+                let direccion = "http://localhost:3505/listarData";
         axios.get(direccion).then( data =>{this.Personas = data.data;
         });
+
+            },
     }
+
 }
 </script>
 <style  scoped>
